@@ -52,3 +52,7 @@ def answer_question(request: AnswerRequest):
 @app.get("/api/vocabulary/score")
 def get_score():
     return score()
+
+@app.get("/api/vocabulary/test")
+def test():
+    return start_or_next()    
