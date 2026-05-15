@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>English B2 Trainer</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h1>English Trainer</h1>
+
+        <label>Nivel</label>
+        <select id="nivel">
+            <option value="">Todos</option>
+            <option value="B2">B2</option>
+            <option value="C1">C1</option>
+        </select>
+
+        <label>Bloque</label>
+        <select id="bloqueExamen">
+            <option value="">Todos</option>
+            <option value="READING">READING</option>
+            <option value="WRITING">WRITING</option>
+            <option value="SPEAKING">SPEAKING</option>
+            <option value="GRAMMAR">GRAMMAR</option>
+        </select>
+
+        <label>Dificultad</label>
+        <select id="dificultad">
+            <option value="">Todas</option>
+            <option value="BAJA">BAJA</option>
+            <option value="MEDIA">MEDIA</option>
+            <option value="ALTA">ALTA</option>
+        </select>
+
+        <button class="secondary" onclick="resetSession()">Nuevo test</button>
+    </aside>
+
+    <main class="content">
+        <section class="card">
+
+            <p id="counter" class="counter">Pulsa START</p>
+
+            <div id="language" class="language">---</div>
+
+            <div id="text" class="phrase">
+                English B2 Trainer
+            </div>
+
+            <div class="meta">
+                <span id="level">Nivel: -</span>
+                <span id="category">Categoría: -</span>
+                <span id="difficulty">Dificultad: -</span>
+            </div>
+
+            <div class="buttons">
+                <button class="main-button" onclick="startNext()">START / SIGUIENTE</button>
+            </div>
+
+            <div class="buttons">
+                <button class="good" onclick="markAnswer(true)">BIEN</button>
+                <button class="bad" onclick="markAnswer(false)">MAL</button>
+            </div>
+
+            <div class="score-box">
+                <p>Aciertos: <span id="correctAnswers">0</span></p>
+                <p>Total: <span id="totalQuestions">0</span></p>
+                <p>Nota: <span id="scoreOverTen">0</span> / 10</p>
+            </div>
+
+        </section>
+    </main>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
