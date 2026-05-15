@@ -100,3 +100,7 @@ function updateScore(data) {
     document.getElementById("scoreOverTen").innerText =
         data.score.scoreOverTen;
 }
+
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("open");
+}
