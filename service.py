@@ -1,17 +1,21 @@
 from database import vocabulary_collection
 
-
 session = {
     "items": [],
     "index": 0,
     "showing_spanish": False,
     "correct_answers": 0,
-    "answered_ids": set(),
+    "wrong_answers": 0,
     "finished": True
 }
 
 
-def start_or_next(nivel=None, categoria=None, bloque_examen=None, dificultad=None):
+def start_or_next(
+        nivel=None,
+        categoria=None,
+        bloque_examen=None,
+        dificultad=None
+):
     global session
 
     if session["finished"]:
@@ -40,7 +44,7 @@ def start_or_next(nivel=None, categoria=None, bloque_examen=None, dificultad=Non
             "index": 0,
             "showing_spanish": False,
             "correct_answers": 0,
-            "answered_ids": set(),
+            "wrong_answers": 0,
             "finished": len(items) == 0
         }
 
@@ -59,33 +63,40 @@ def start_or_next(nivel=None, categoria=None, bloque_examen=None, dificultad=Non
 
 
 def answer(correct: bool):
+    global session
+
     current = get_current()
 
     if current is None:
         return build_response()
 
-    current_id = current.get("id")
-
-    if current_id not in session["answered_ids"]:
-        session["answered_ids"].add(current_id)
-
-        if correct:
-            session["correct_answers"] += 1
+    if correct:
+        session["correct_answers"] += 1
+    else:
+        session["wrong_answers"] += 1
 
     return build_response()
 
 
 def score():
-    total = len(session["items"])
+    total_answered = (
+        session["correct_answers"] +
+        session["wrong_answers"]
+    )
 
-    if total == 0:
+    if total_answered == 0:
         score_over_ten = 0
     else:
-        score_over_ten = round((session["correct_answers"] / total) * 10, 2)
+        score_over_ten = round(
+            (session["correct_answers"] / total_answered) * 10,
+            2
+        )
 
     return {
         "correctAnswers": session["correct_answers"],
-        "totalQuestions": total,
+        "wrongAnswers": session["wrong_answers"],
+        "totalQuestions": len(session["items"]),
+        "answeredQuestions": total_answered,
         "scoreOverTen": score_over_ten,
         "approved": score_over_ten >= 5
     }
@@ -140,6 +151,7 @@ def get_current():
 
     return session["items"][session["index"]]
 
+
 def reset_session():
     global session
 
@@ -148,10 +160,10 @@ def reset_session():
         "index": 0,
         "showing_spanish": False,
         "correct_answers": 0,
-        "answered_ids": set(),
+        "wrong_answers": 0,
         "finished": True
     }
 
     return {
         "message": "Session reset"
-    }    
+    }
