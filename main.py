@@ -56,3 +56,8 @@ def get_score():
 @app.get("/api/vocabulary/test")
 def test():
     return start_or_next()    
+
+@app.post("/api/vocabulary/reset")
+def reset():
+    from service import reset_session
+    return reset_session()    

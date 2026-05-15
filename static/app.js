@@ -39,6 +39,27 @@ async function markAnswer(correct) {
 }
 
 
+async function resetSession() {
+    const response = await fetch("/api/vocabulary/reset", {
+        method: "POST"
+    });
+
+    await response.json();
+
+    document.getElementById("counter").innerText = "Pulsa START";
+    document.getElementById("language").innerText = "---";
+    document.getElementById("text").innerText = "English B2 Trainer";
+
+    document.getElementById("level").innerText = "Nivel: -";
+    document.getElementById("category").innerText = "Categoría: -";
+    document.getElementById("difficulty").innerText = "Dificultad: -";
+
+    document.getElementById("correctAnswers").innerText = "0";
+    document.getElementById("totalQuestions").innerText = "0";
+    document.getElementById("scoreOverTen").innerText = "0";
+}
+
+
 function render(data) {
     if (data.finished) {
         document.getElementById("counter").innerText = "Test terminado";
@@ -78,9 +99,4 @@ function updateScore(data) {
 
     document.getElementById("scoreOverTen").innerText =
         data.score.scoreOverTen;
-}
-
-
-function resetSession() {
-    location.reload();
 }

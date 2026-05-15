@@ -139,3 +139,19 @@ def get_current():
         return None
 
     return session["items"][session["index"]]
+
+def reset_session():
+    global session
+
+    session = {
+        "items": [],
+        "index": 0,
+        "showing_spanish": False,
+        "correct_answers": 0,
+        "answered_ids": set(),
+        "finished": True
+    }
+
+    return {
+        "message": "Session reset"
+    }    
